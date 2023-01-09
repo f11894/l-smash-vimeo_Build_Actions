@@ -44,7 +44,7 @@ jobs:
         git config --local user.email "16046279+f11894@users.noreply.github.com"
         git config --local user.name "f11894"
         git merge 7690dd38b2f023c0f36b03b5f0af0a5a512c04db
-        git submodule update --init --recursive
+        git submodule update --init --recursive --remote
         ./configure
         make -j 2
     - name: postprocessing
