@@ -32,6 +32,16 @@ jobs:
             autotools
         msystem: MINGW64
         path-type: strict
+    - name: install obuparse
+      shell: msys2 {0}
+      run: |
+        export HOME=${{ github.workspace }}
+        git clone https://github.com/dwbuiten/obuparse
+        cd obuparse
+        gcc -c obuparse.c
+        ar r libobuparse.a obuparse.o
+        install obuparse.h /mingw64/include
+        install libobuparse.a /mingw64/lib
     - name: build
       shell: msys2 {0}
       run: |
@@ -41,10 +51,6 @@ jobs:
         export CXXFLAGS="$CFLAGS"
         git clone https://github.com/vimeo/l-smash
         cd l-smash
-        git config --local user.email "16046279+f11894@users.noreply.github.com"
-        git config --local user.name "f11894"
-        git cherry-pick 7690dd38b2f023c0f36b03b5f0af0a5a512c04db
-        git submodule update --init --recursive --remote
         ./configure
         make -j 2
     - name: postprocessing
@@ -54,7 +60,7 @@ jobs:
         for /f "delims=" %%i in ('git -C l-smash rev-list --count HEAD') do set "revision=%%i"
         copy /y l-smash\cli\*.exe .\
         copy /y l-smash\LICENSE l-smash_LICENSE.txt
-        copy /y l-smash\obuparse\LICENSE obuparse_LICENSE.txt
+        copy /y obuparse\LICENSE obuparse_LICENSE.txt
         7z a "l-smash-vimeo_r%revision%-%shorthash%.7z" *.exe l-smash_LICENSE.txt obuparse_LICENSE.txt
     - name: Upload result
       uses: actions/upload-artifact@v3
