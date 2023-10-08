@@ -98,4 +98,4 @@ jobs:
         for asset in ${{ github.workspace }}/artifacts/*.7z; do
           assets+=("-a" "$asset")
         done
-        gh release create "${assets[@]}" -m "$RELEASE_NAME" "$TAG_NAME"
+        gh release create "$TAG_NAME" "${assets[@]}"
