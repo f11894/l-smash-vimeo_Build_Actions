@@ -92,10 +92,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        RELEASE_NAME=Build-${{ steps.get_date.outputs.DATE_TIME }}
         TAG_NAME=build-${{ steps.get_date.outputs.DATE_TIME }}
         assets=()
         for asset in ${{ github.workspace }}/artifacts/*.7z; do
-          assets+=("-a" "$asset")
+          assets+=("$asset")
         done
-        gh release create $TAG_NAME ${assets[@]}
+        gh release create "$TAG_NAME" "${assets[@]}"
