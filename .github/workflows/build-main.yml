@@ -40,8 +40,8 @@ jobs:
         cd obuparse
         gcc -c obuparse.c
         ar r libobuparse.a obuparse.o
-        install obuparse.h /mingw64/include
-        install libobuparse.a /mingw64/lib
+        install obuparse.h /ucrt64/include
+        install libobuparse.a /ucrt64/lib
     - name: build
       shell: msys2 {0}
       run: |
