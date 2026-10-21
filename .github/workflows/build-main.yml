@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
       with:
         fetch-depth: 0
     - uses: msys2/setup-msys2@v2
@@ -20,17 +20,17 @@ jobs:
         location: D:\msys2_github\
         update: true
         install: >-
-            mingw-w64-x86_64-cmake
-            mingw-w64-x86_64-gcc
-            mingw-w64-x86_64-nasm
-            mingw-w64-x86_64-yasm
-            mingw-w64-x86_64-ninja
-            mingw-w64-x86_64-pkg-config
-            mingw-w64-x86_64-meson
+            mingw-w64-ucrt-x86_64-cmake
+            mingw-w64-ucrt-x86_64-gcc
+            mingw-w64-ucrt-x86_64-nasm
+            mingw-w64-ucrt-x86_64-yasm
+            mingw-w64-ucrt-x86_64-ninja
+            mingw-w64-ucrt-x86_64-pkg-config
+            mingw-w64-ucrt-x86_64-meson
             git
             base-devel
             autotools
-        msystem: MINGW64
+        msystem: UCRT64
         path-type: strict
     - name: install obuparse
       shell: msys2 {0}
@@ -63,7 +63,7 @@ jobs:
         copy /y obuparse\LICENSE obuparse_LICENSE.txt
         7z a "l-smash-vimeo_r%revision%-%shorthash%.7z" *.exe l-smash_LICENSE.txt obuparse_LICENSE.txt
     - name: Upload result
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: l-smash
         path: |
@@ -75,9 +75,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v7
     
-    - uses: actions/download-artifact@v4
+    - uses: actions/download-artifact@v8
       with:
         name: l-smash
         path: artifacts
